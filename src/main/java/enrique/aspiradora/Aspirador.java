@@ -230,7 +230,20 @@ public class Aspirador {
                             }
                             break;
                         case 5:
-                            // Configuración
+                            // Configuración 
+                            // Mostrar la fecha actual
+                            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                            Date hora = new Date();
+                            System.out.println("Hora actual: " + dateFormat.format(hora));
+
+                            // Mostrar la ubicacion, si es 0 se encuentra en la base de carga
+                            if (ubicacion == 0) {
+                                System.out.println("La aspiradora se encuentra en la base de carga");
+                            } else {
+                                System.out.println("La aspiradora se encuentra en la dependencia " + ubicacion);
+                            }
+                            // Enseñar los m2 de la casa y el numero de dependencias.
+                            System.out.println("La casa tiene " + nDependencias + " dependencias y en total " + sumaMetros + " metros ");
                             break;
                         case 6:
                             // Carga
