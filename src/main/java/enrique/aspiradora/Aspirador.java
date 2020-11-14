@@ -36,7 +36,7 @@ public class Aspirador {
         int ubicacion = 0;
         String si = "si";
         String no = "no";
-        
+
         // Manera en la que usar los JOptionPane
 //        JOptionPane.showMessageDialog(null, "Buenos días"); Manera de añadir los Joptions
         System.out.println("Buenos días");
@@ -75,7 +75,21 @@ public class Aspirador {
                             // Sumamos todos los m2 de la casa para poder mostrarlos mas adelante.
                             sumaMetros += metrosCuadrados[i];
                         }
+                    }
+                    // Añadimos un menú para el usuario. Mientras no seleccione una de las opciones se le preguntara de nuevo.
+                    System.out.println("¿Qué desea hacer?"
+                            + "\n 1. - Configurar el sistema"
+                            + "\n 2. - Cargar"
+                            + "\n 3. - Aspiración"
+                            + "\n 4. - Aspiración y fregado"
+                            + "\n 5. - Estado general"
+                            + "\n 6. - Base de carga"
+                            + "\n 7. - Salir");
+                    modo = teclado.nextInt();
 
+                    while (modo < 0 || modo > 7) {
+                        System.out.println("Escriba un valor correcto");
+                        modo = teclado.nextInt();
                     }
 
                     break;
