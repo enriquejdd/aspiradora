@@ -33,6 +33,18 @@ public class Aspirador {
         String si = "si";
         String no = "no";
 //        JOptionPane.showMessageDialog(null, "Buenos días"); Manera de añadir los Joptions
-       
+        System.out.println("Buenos días");
+        bateria = 100;
+        do {
+            System.out.println("");
+            System.out.println("¿Desea que empiece con la limpieza?"
+                    + "\n Si."
+                    + "\n No.");
+            String iniciar = teclado.nextLine();
+            while (!iniciar.equals(si) && !iniciar.equals(no)) {
+                System.out.println("Valor incorrecto, pruebe nuevamente.");
+                iniciar = teclado.nextLine();
+            }
+        } while (repetir);
     }
 }
