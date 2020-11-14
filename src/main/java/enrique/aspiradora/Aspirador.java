@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class Aspirador {
 
-    // Pendiente que sepa la ubicación de la aspiradora y cambiar los sout por JOptions.
+    // Pendiente cambiar los sout por JOptions.
     public static void main(String[] args) {
         // Creamos el escaner, las variables int del numero de dependencias, el modo de limpieza que usará, la ubicación y un int para saber
         // si es la primera ejecucion del programa.
@@ -29,7 +29,7 @@ public class Aspirador {
         double[] metrosCuadrados = new double[nDependencias];
         double bateria;
         boolean repetir = true;
-        int modo;
+        String modo;
         int primeraVez = 1;
         double contador = 0;
         double sumaMetros = 0;
@@ -41,21 +41,18 @@ public class Aspirador {
         double bateriaAspiracionFregado = 2.5;
 
         // Manera en la que usar los JOptionPane
-//        JOptionPane.showMessageDialog(null, "Buenos días"); Manera de añadir los Joptions
-        System.out.println("Buenos días");
+        JOptionPane.showMessageDialog(null, "Buenos días"); //Manera de añadir los Joptions
+
         // Al ser la primera vez empezará con la batería totalmente cargada
         bateria = 100;
         // Creamos el bucle general de la aplicacion la cual permitira su uso hasta que la persona quiera finalizar.
         do {
-            System.out.println("");
-            System.out.println("¿Desea que empiece con la limpieza?"
+            String iniciar = JOptionPane.showInputDialog("¿Desea que empiece con la limpieza?"
                     + "\n Si."
                     + "\n No.");
-            String iniciar = teclado.nextLine();
             // Creamos un bucle para que hasta que no sea la respuesta si o no pregunte sin fin.
             while (!iniciar.equals(si) && !iniciar.equals(no)) {
-                System.out.println("Valor incorrecto, pruebe nuevamente.");
-                iniciar = teclado.nextLine();
+                iniciar = JOptionPane.showInputDialog("Valor incorrecto, pruebe nuevamente");
             }
 
             // Creamos un switch para las opciones si y no, tambien se podria hacer con un if-else pero le veo mejor estetica así. 
@@ -63,24 +60,29 @@ public class Aspirador {
                 case "si":
                     // Creamos un if para que la primera vez que se inicie el programa pida los metros cuadrados de las habitaciones.
                     if (primeraVez == 1) {
-                        System.out.println("Configuración inicial de los metros cuadrados.");
+//                        // Para indicar el numero de dependencias de la casa en vez de asignarle 5 de inicio.
+//                        System.out.println("¿Cuantás dependencias tiene la casa?");
+//                        nDependencias = teclado.nextInt();
+//                        metrosCuadrados = new double[nDependencias];
+
+                        JOptionPane.showMessageDialog(null, "Configuración inicial de los metros cuadrados.");
                         // Bucle for en el cual se repetirá mientras i sea menor que el numero de dependencias(5) en este caso.
                         for (int i = 0; i < nDependencias; i++) {
                             // Mostramos el numero de la sala a pedir los datos y se lo asignamos por teclado.
-                            System.out.println("Metros cuadrados de la sala " + (i + 1));
-                            metrosCuadrados[i] = teclado.nextDouble();
+                            String metros = JOptionPane.showInputDialog("Metros cuadrados de la sala " + (i + 1));
+                            metrosCuadrados[i] = Integer.parseInt(metros);
 
                             // Se añadiran siempre que los datos sean mayor a 0m2, en caso contrario lo pedirá de nuevo.
                             while (metrosCuadrados[i] < 0) {
-                                System.out.println("Escriba un valor superior a 0 metros cuadrados");
-                                metrosCuadrados[i] = teclado.nextDouble();
+                                metros = JOptionPane.showInputDialog("Escriba un valor superior a 0 metros cuadrados");
+                                metrosCuadrados[i] = Integer.parseInt(metros);
                             }
                             // Sumamos todos los m2 de la casa para poder mostrarlos mas adelante.
                             sumaMetros += metrosCuadrados[i];
                         }
                     }
                     // Añadimos un menú para el usuario. Mientras no seleccione una de las opciones se le preguntara de nuevo.
-                    System.out.println("¿Qué desea hacer?"
+                    modo = JOptionPane.showInputDialog("¿Qué desea hacer?"
                             + "\n 1. - Configurar el sistema"
                             + "\n 2. - Cargar"
                             + "\n 3. - Aspiración"
@@ -88,53 +90,46 @@ public class Aspirador {
                             + "\n 5. - Estado general"
                             + "\n 6. - Base de carga"
                             + "\n 7. - Salir");
-                    modo = teclado.nextInt();
+                    int modo1 = Integer.parseInt(modo);
 
-                    while (modo < 0 || modo > 7) {
-                        System.out.println("Escriba un valor correcto");
-                        modo = teclado.nextInt();
+                    while (modo1 < 0 || modo1 > 7) {
+                        modo = JOptionPane.showInputDialog("Escriba un valor correcto");
+                        modo1 = Integer.parseInt(modo);
                     }
 
-                    switch (modo) {
+                    switch (modo1) {
                         // Primera opcion en la cual configuramos los m2 de la casa nuevamente.
                         case 1:
-                            System.out.println("");
-                            System.out.println("--------------------------------------------------");
-                            System.out.println("CONFIGURACIÓN DE LOS METROS CUADRADOS DE LAS SALAS");
+                            JOptionPane.showMessageDialog(null, "CONFIGURACIÓN DE LOS METROS CUADRADOS DE LAS SALAS");
                             for (int i = 0; i < metrosCuadrados.length; i++) {
-                                System.out.println("Metros cuadrados de la sala " + (i + 1));
-                                metrosCuadrados[i] = teclado.nextDouble();
+                                String metros = JOptionPane.showInputDialog("Metros cuadrados de la sala " + (i + 1));
+                                metrosCuadrados[i] = Integer.parseInt(metros);
 
                                 while (metrosCuadrados[i] < 0) {
-                                    System.out.println("Escriba un valor superior a 0 metros cuadrados");
-                                    metrosCuadrados[i] = teclado.nextDouble();
+                                    metros = JOptionPane.showInputDialog("Escriba un valor superior a 0 metros cuadrados");
+                                    metrosCuadrados[i] = Integer.parseInt(metros);
                                 }
                             }
                             break;
 
                         // Mostramos el nivel de la carga de la aspiradora.
                         case 2:
-                            System.out.println("");
-                            System.out.println("--------------");
-                            System.out.println("BATERIA ACTUAL");
-                            System.out.println("La bateria actual de la aspiradora es: " + bateria);
+                            JOptionPane.showMessageDialog(null, "BATERIA ACTUAL"
+                                    + "\n La bateria actual de la aspiradora es: " + bateria);
                             break;
 
                         // Modo de aspiración.
                         case 3:
                             // Preguntamos por que tipo de aspiracion desea. Y creamos su respectivo bucle de control.
-                            System.out.println("");
-                            System.out.println("---------------");
-                            System.out.println("MODO ASPIRACIÓN");
-                            System.out.println("¿Qué modo de aspiración desea?"
+                            String modo2 = JOptionPane.showInputDialog("MODO ASPIRACIÓN"
+                                    + "\n ¿Qué modo de aspiración desea?"
                                     + "\n 1. - Modo Completo"
                                     + "\n 2. - Modo Dependencias");
-                            int modoAspiracion = teclado.nextInt();
+                            int modoAspiracion = Integer.parseInt(modo2);
 
                             while (modoAspiracion != 1 && modoAspiracion != 2) {
-//                                JOptionPane.showMessageDialog(null, "Opcion elegida incorrecta, pruebe nuevamente");
-                                System.out.println("Opcion elegida incorrecta, pruebe nuevamente");
-                                modoAspiracion = teclado.nextInt();
+                                modo2 = JOptionPane.showInputDialog("Opcion elegida incorrecta, pruebe nuevamente");
+                                modoAspiracion = Integer.parseInt(modo2);
                             }
                             // Creamos otro switch dependiendo de la eleccion
                             switch (modoAspiracion) {
@@ -142,42 +137,42 @@ public class Aspirador {
                                     // En caso de que la eleccion sea la 1 recorrerá todas las habitaciones mientras no se quede sin bateria
                                     for (int j = 0; j < metrosCuadrados.length; j++) {
                                         contador = contador + metrosCuadrados[j];
-//                                        System.out.println(contador);
                                         // Creo un if para que antes de "iniciar" la limpieza vea si puede acabar la habitacion y en caso contrario
                                         // se lo notifique al usuario y pare con la limpieza.
                                         if ((bateria - (contador * bateriaAspiracion)) <= 3) {
-                                            System.out.println("Batería restante insuficiente para continuar, mandar a la base de carga");
+                                            JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, "
+                                                    + "mandar a la base de carga");
                                             break;
                                         }
                                         // Si tiene bateria suficiente limpiará la habitacion y mostrará su bateria.
                                         bateria = bateria - (contador * bateriaAspiracion);
-                                        System.out.println("La bateria restante de la aspiradora es: " + bateria);
                                         // Le sumamos 1 al valor de la ubicacion para saber en que sala se encuentra.
                                         ubicacion++;
                                         // Tambien volvemos a darle el valor 0 al contador para que no se solapen unas habitaciones con otras
                                         contador = 0;
+                                        JOptionPane.showMessageDialog(null, "Limpieza de la dependencia " + ubicacion + " realizada");
 
+                                        if ((j + 1) == 5) {
+                                            // Mensaje a mostrar al finalizar la limpieza de las habitaciones
+                                            JOptionPane.showMessageDialog(null, "Limpieza de todas las dependencias completa");
+                                        }
                                     }
-                                    // Mensaje a mostrar al finalizar la limpieza de las habitaciones
-                                    System.out.println("Limpieza de todas las dependencias completa");
                                     break;
 
                                 case 2:
                                     // Modo en el cual selecionamos una habitacion a limpiar.
-                                    System.out.println("¿Qué dependencia desea que se limpie?");
-                                    int dependenciaLimpiar = teclado.nextInt();
+                                    String dep = JOptionPane.showInputDialog("¿Qué dependencia desea que se limpie?");
+                                    int dependenciaLimpiar = Integer.parseInt(dep);
                                     // Restamos 1 ya que la array empieza en 0
                                     contador = contador + metrosCuadrados[dependenciaLimpiar - 1];
 
                                     if ((bateria - (contador * bateriaAspiracion)) <= 3) {
-                                        System.out.println("Batería restante insuficiente para continuar, mandar a la base de carga");
+                                        JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, mandar a la base de carga");
                                         break;
                                     }
                                     ubicacion = dependenciaLimpiar;
-                                    System.out.println("La dependencia " + dependenciaLimpiar + " ha sido limpiada correctamente.");
+                                    JOptionPane.showMessageDialog(null, "La dependencia " + dependenciaLimpiar + " ha sido limpiada correctamente.");
                                     bateria = bateria - (contador * bateriaAspiracion);
-                                    // Bateria después de la limpieza.
-                                    System.out.println("La bateria restante de la aspiradora es: " + bateria);
                                     // Tambien volvemos a darle el valor 0 al contador para que no se solapen unas habitaciones con otras
                                     contador = 0;
                                     break;
@@ -186,18 +181,15 @@ public class Aspirador {
 
                         // Modo de aspiración y fregado
                         case 4:
-                            System.out.println("");
-                            System.out.println("------------------");
-                            System.out.println("ASPIRACIÓN FREGADO");
-                            // Preguntamos por que tipo de aspiracion y fregado desea. Y creamos su respectivo bucle de control.
-                            System.out.println("¿Qué modo de aspiración y fregado desea?"
+                            modo = JOptionPane.showInputDialog("ASPIRACIÓN FREGADO"
+                                    + "\n ¿Qué modo de aspiración y fregado desea?"
                                     + "\n 1. - Modo Completo"
                                     + "\n 2. - Modo Dependencias");
-                            modoAspiracion = teclado.nextInt();
+                            modoAspiracion = Integer.parseInt(modo);
 
                             while (modoAspiracion != 1 && modoAspiracion != 2) {
-                                System.out.println("Opcion elegida incorrecta, pruebe nuevamente");
-                                modoAspiracion = teclado.nextInt();
+                                JOptionPane.showMessageDialog(null, "Opcion elegida incorrecta, pruebe nuevamente");
+                                modoAspiracion = Integer.parseInt(modo);
                             }
 
                             switch (modoAspiracion) {
@@ -205,38 +197,38 @@ public class Aspirador {
                                     // En caso de que la eleccion sea la 1 recorrerá todas las habitaciones mientras no se quede sin bateria
                                     for (int j = 0; j < metrosCuadrados.length; j++) {
                                         contador = contador + metrosCuadrados[j];
-//                                        System.out.println(contador);
                                         // Para deteenr su ejecución si no tiene bateria suficiente para su funcion
                                         if ((bateria - (contador * bateriaAspiracionFregado)) <= 3) {
-                                            System.out.println("Batería restante insuficiente para continuar, mandar a la base de carga");
-
+                                            JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, mandar a la base de carga");
                                             break;
                                         }
                                         // EN caso contrario realizará la limpieza sin problemas
                                         bateria = bateria - (contador * bateriaAspiracionFregado);
-                                        System.out.println("La bateria restante de la aspiradora es: " + bateria);
                                         contador = 0;
                                         ubicacion++;
 
+                                        JOptionPane.showMessageDialog(null, "Limpieza de la dependencia " + ubicacion + " realizada");
+
+                                        if ((j + 1) == 5) {
+                                            JOptionPane.showMessageDialog(null, "Limpieza de todas las dependencias completa");
+                                        }
                                     }
-                                    System.out.println("Limpieza de todas las dependencias completa");
                                     break;
 
                                 case 2:
                                     // Modo en el cual selecionamos una habitacion a limpiar.
-                                    System.out.println("¿Qué dependencia desea que se limpie?");
-                                    int dependenciaLimpiar = teclado.nextInt();
+                                    String dep = JOptionPane.showInputDialog("¿Qué dependencia desea que se limpie?");
+                                    int dependenciaLimpiar = Integer.parseInt(dep);
                                     // Restamos 1 ya que la array empieza en 0
                                     contador = contador + metrosCuadrados[dependenciaLimpiar - 1];
 
                                     // Para detener su ejecución si no tiene bateria suficiente para su funcion
                                     if ((bateria - (contador * bateriaAspiracionFregado)) <= 3) {
-                                        System.out.println("Batería restante insuficiente para continuar, mandar a la base de carga");
+                                        JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, mandar a la base de carga");
                                         break;
                                     }
                                     ubicacion = dependenciaLimpiar;
                                     bateria = bateria - (contador * bateriaAspiracionFregado);
-                                    System.out.println("La bateria restante de la aspiradora es: " + bateria);
                                     // Tambien volvemos a darle el valor 0 al contador para que no se solapen unas habitaciones con otras
                                     contador = 0;
                                     break;
@@ -244,60 +236,48 @@ public class Aspirador {
                             break;
                         case 5:
                             // Estado general 
-                            System.out.println("");
-                            System.out.println("--------------");
-                            System.out.println("ESTADO GENERAL");
+                            JOptionPane.showMessageDialog(null, "ESTADO GENERAL");
+
+                            if (ubicacion == 0) {
+                                JOptionPane.showMessageDialog(null, "La aspiradora se encuentra en la base de carga");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "La aspiradora se encuentra en la dependencia " + ubicacion);
+                            }
+
                             // Mostrar la fecha actual
                             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
                             Date hora = new Date();
-                            System.out.println("");
-                            System.out.println("Hora actual: " + dateFormat.format(hora));
+                            JOptionPane.showMessageDialog(null, "Hora actual: " + dateFormat.format(hora)
+                                    + "\nLa casa tiene " + nDependencias + " dependencias y en total " + sumaMetros + " metros");
 
-                            // Mostrar la ubicacion, si es 0 se encuentra en la base de carga
-                            System.out.println("");
-                            if (ubicacion == 0) {
-                                System.out.println("La aspiradora se encuentra en la base de carga");
-                            } else {
-                                System.out.println("La aspiradora se encuentra en la dependencia " + ubicacion);
-                            }
-                            System.out.println("");
-                            // Enseñar los m2 de la casa y el numero de dependencias.
-                            System.out.println("La casa tiene " + nDependencias + " dependencias y en total " + sumaMetros + " metros ");
                             break;
                         case 6:
                             // Carga
-                            System.out.println("");
-                            System.out.println("-----");
-                            System.out.println("CARGA");
-                            ubicacion = 0;
-                            System.out.println("Aspiradora diriguiendose a su base de carga");
-                            System.out.println("");
-                            System.out.println("Aspiradora cargandose");
+                            JOptionPane.showMessageDialog(null, "CARGA"
+                                    + "\n Aspiradora diriguiendose a su base de carga"
+                                    + "\n "
+                                    + "\n Aspiradora cargandose"
+                                    + "\n "
+                                    + "\n Batería cargada satisfactoriamente");
                             bateria = 100;
-                            System.out.println("");
-                            System.out.println("Batería cargada satisfactoriamente");
                             break;
                         case 7:
                             // Salir
-                            System.out.println("");
-                            System.out.println("-----");
-                            System.out.println("SALIR");
-                            System.out.println("");
-                            System.out.println("Finalizando el programa de limpieza");
+                            JOptionPane.showMessageDialog(null, "SALIR"
+                                    + "\n "
+                                    + "\n Finalizando el programa de limpieza");
                             repetir = false;
                             break;
                     }
                     // Mostramos la bateria restante a la aspiradora, y aumentamos el valor a primeraVEz para que no pida siempre los m2.
-                    System.out.println("Bateria restante " + bateria);
+                    JOptionPane.showMessageDialog(null, "Bateria restante " + bateria);
                     primeraVez++;
-                    // Vaciamos el buffer del tecaldo para poder pasar de numeros a letras en las repeticiones.
-                    teclado.nextLine();
+
                     break;
 
                 case "no":
                     // En caso de que su respuesta sea no, mostrará que finalizará el programa, cambiando el valor del boolean y así saliendo.
-                    System.out.println("");
-                    System.out.println("Finalizando el programa de limpieza");
+                    JOptionPane.showMessageDialog(null, "Finalizando el programa de limpieza");
                     repetir = false;
             }
         } while (repetir);
