@@ -160,8 +160,8 @@ public class Aspirador {
                                     // Modo en el cual selecionamos una habitacion a limpiar.
                                     System.out.println("¿Qué dependencia desea que se limpie?");
                                     int dependenciaLimpiar = teclado.nextInt();
-
-                                    contador = contador + metrosCuadrados[dependenciaLimpiar];
+                                    // Restamos 1 ya que la array empieza en 0
+                                    contador = contador + metrosCuadrados[dependenciaLimpiar-1];
 
                                     if ((bateria - (contador * bateriaAspiracion)) <= 3) {
                                         System.out.println("Batería restante insuficiente para continuar, mandar a la base de carga");
@@ -215,8 +215,8 @@ public class Aspirador {
                                     // Modo en el cual selecionamos una habitacion a limpiar.
                                     System.out.println("¿Qué dependencia desea que se limpie?");
                                     int dependenciaLimpiar = teclado.nextInt();
-
-                                    contador = contador + metrosCuadrados[dependenciaLimpiar];
+                                    // Restamos 1 ya que la array empieza en 0
+                                    contador = contador + metrosCuadrados[dependenciaLimpiar-1];
 
                                     // Para detener su ejecución si no tiene bateria suficiente para su funcion
                                     if ((bateria - (contador * bateriaAspiracionFregado)) <= 3) {
@@ -265,6 +265,8 @@ public class Aspirador {
                     // Mostramos la bateria restante a la aspiradora, y aumentamos el valor a primeraVEz para que no pida siempre los m2.
                     System.out.println("Bateria restante " + bateria);
                     primeraVez++;
+                    // Vaciamos el buffer del tecaldo para poder pasar de numeros a letras en las repeticiones.
+                    teclado.nextLine();
                     break;
 
                 case "no":
