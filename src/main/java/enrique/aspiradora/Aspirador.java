@@ -45,6 +45,16 @@ public class Aspirador {
                 System.out.println("Valor incorrecto, pruebe nuevamente.");
                 iniciar = teclado.nextLine();
             }
+
+            switch (iniciar) {
+                case "si":
+                    break;
+
+                case "no":
+                    System.out.println("");
+                    System.out.println("Finalizando el programa de limpieza");
+                    repetir = false;
+            }
         } while (repetir);
     }
 }
