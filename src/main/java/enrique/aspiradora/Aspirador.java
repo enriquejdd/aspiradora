@@ -114,12 +114,18 @@ public class Aspirador {
 
                         // Mostramos el nivel de la carga de la aspiradora.
                         case 2:
+                            System.out.println("");
+                            System.out.println("--------------");
+                            System.out.println("BATERIA ACTUAL");
                             System.out.println("La bateria actual de la aspiradora es: " + bateria);
                             break;
 
                         // Modo de aspiración.
                         case 3:
                             // Preguntamos por que tipo de aspiracion desea. Y creamos su respectivo bucle de control.
+                            System.out.println("");
+                            System.out.println("---------------");
+                            System.out.println("MODO ASPIRACIÓN");
                             System.out.println("¿Qué modo de aspiración desea?"
                                     + "\n 1. - Modo Completo"
                                     + "\n 2. - Modo Dependencias");
@@ -161,7 +167,7 @@ public class Aspirador {
                                     System.out.println("¿Qué dependencia desea que se limpie?");
                                     int dependenciaLimpiar = teclado.nextInt();
                                     // Restamos 1 ya que la array empieza en 0
-                                    contador = contador + metrosCuadrados[dependenciaLimpiar-1];
+                                    contador = contador + metrosCuadrados[dependenciaLimpiar - 1];
 
                                     if ((bateria - (contador * bateriaAspiracion)) <= 3) {
                                         System.out.println("Batería restante insuficiente para continuar, mandar a la base de carga");
@@ -172,12 +178,17 @@ public class Aspirador {
                                     bateria = bateria - (contador * bateriaAspiracion);
                                     // Bateria después de la limpieza.
                                     System.out.println("La bateria restante de la aspiradora es: " + bateria);
+                                    // Tambien volvemos a darle el valor 0 al contador para que no se solapen unas habitaciones con otras
+                                    contador = 0;
                                     break;
                             }
                             break;
 
                         // Modo de aspiración y fregado
                         case 4:
+                            System.out.println("");
+                            System.out.println("------------------");
+                            System.out.println("ASPIRACIÓN FREGADO");
                             // Preguntamos por que tipo de aspiracion y fregado desea. Y creamos su respectivo bucle de control.
                             System.out.println("¿Qué modo de aspiración y fregado desea?"
                                     + "\n 1. - Modo Completo"
@@ -216,7 +227,7 @@ public class Aspirador {
                                     System.out.println("¿Qué dependencia desea que se limpie?");
                                     int dependenciaLimpiar = teclado.nextInt();
                                     // Restamos 1 ya que la array empieza en 0
-                                    contador = contador + metrosCuadrados[dependenciaLimpiar-1];
+                                    contador = contador + metrosCuadrados[dependenciaLimpiar - 1];
 
                                     // Para detener su ejecución si no tiene bateria suficiente para su funcion
                                     if ((bateria - (contador * bateriaAspiracionFregado)) <= 3) {
@@ -226,27 +237,38 @@ public class Aspirador {
                                     ubicacion = dependenciaLimpiar;
                                     bateria = bateria - (contador * bateriaAspiracionFregado);
                                     System.out.println("La bateria restante de la aspiradora es: " + bateria);
+                                    // Tambien volvemos a darle el valor 0 al contador para que no se solapen unas habitaciones con otras
+                                    contador = 0;
                                     break;
                             }
                             break;
                         case 5:
-                            // Configuración 
+                            // Estado general 
+                            System.out.println("");
+                            System.out.println("--------------");
+                            System.out.println("ESTADO GENERAL");
                             // Mostrar la fecha actual
                             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
                             Date hora = new Date();
+                            System.out.println("");
                             System.out.println("Hora actual: " + dateFormat.format(hora));
 
                             // Mostrar la ubicacion, si es 0 se encuentra en la base de carga
+                            System.out.println("");
                             if (ubicacion == 0) {
                                 System.out.println("La aspiradora se encuentra en la base de carga");
                             } else {
                                 System.out.println("La aspiradora se encuentra en la dependencia " + ubicacion);
                             }
+                            System.out.println("");
                             // Enseñar los m2 de la casa y el numero de dependencias.
                             System.out.println("La casa tiene " + nDependencias + " dependencias y en total " + sumaMetros + " metros ");
                             break;
                         case 6:
                             // Carga
+                            System.out.println("");
+                            System.out.println("-----");
+                            System.out.println("CARGA");
                             ubicacion = 0;
                             System.out.println("Aspiradora diriguiendose a su base de carga");
                             System.out.println("");
@@ -257,6 +279,9 @@ public class Aspirador {
                             break;
                         case 7:
                             // Salir
+                            System.out.println("");
+                            System.out.println("-----");
+                            System.out.println("SALIR");
                             System.out.println("");
                             System.out.println("Finalizando el programa de limpieza");
                             repetir = false;
