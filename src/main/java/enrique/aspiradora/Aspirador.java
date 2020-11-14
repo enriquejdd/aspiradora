@@ -93,12 +93,70 @@ public class Aspirador {
                     }
 
                     switch (modo) {
+                        // Primera opcion en la cual configuramos los m2 de la casa nuevamente.
                         case 1:
+                            System.out.println("");
+                            System.out.println("--------------------------------------------------");
+                            System.out.println("CONFIGURACIÓN DE LOS METROS CUADRADOS DE LAS SALAS");
+                            for (int i = 0; i < metrosCuadrados.length; i++) {
+                                System.out.println("Metros cuadrados de la sala " + (i + 1));
+                                metrosCuadrados[i] = teclado.nextDouble();
+
+                                while (metrosCuadrados[i] < 0) {
+                                    System.out.println("Escriba un valor superior a 0 metros cuadrados");
+                                    metrosCuadrados[i] = teclado.nextDouble();
+                                }
+                            }
                             break;
+                        // Mostramos el nivel de la carga de la aspiradora.
                         case 2:
+                            System.out.println("La bateria actual de la aspiradora es: " + bateria);
                             break;
+                        // Modo de aspiración.
                         case 3:
+                            // Preguntamos por que tipo de aspiracion desea. Y creamos su respectivo bucle de control.
+                            System.out.println("¿Qué modo de aspiración desea?"
+                                    + "\n 1. - Modo Completo"
+                                    + "\n 2. - Modo Dependencias");
+                            int modoAspiracion = teclado.nextInt();
+
+                            while (modoAspiracion != 1 && modoAspiracion != 2) {
+//                                JOptionPane.showMessageDialog(null, "Opcion elegida incorrecta, pruebe nuevamente");
+                                System.out.println("Opcion elegida incorrecta, pruebe nuevamente");
+                                modoAspiracion = teclado.nextInt();
+                            }
+                            // Creamos otro switch dependiendo de la eleccion
+                            switch (modoAspiracion) {
+                                case 1:
+                                    // En caso de que la eleccion sea la 1 recorrerá todas las habitaciones mientras no se quede sin bateria
+                                    for (int j = 0; j < metrosCuadrados.length; j++) {
+                                        contador = contador + metrosCuadrados[j];
+//                                        System.out.println(contador);
+                                        // Creo un if para que antes de "iniciar" la limpieza vea si puede acabar la habitacion y en caso contrario
+                                        // se lo notifique al usuario y pare con la limpieza.
+                                        if ((bateria - (contador * 1.5)) <= 3) {
+                                            System.out.println("Batería restante insuficiente para continuar, mandar a la base de carga");
+
+                                            break;
+                                        }
+                                        // Si tiene bateria suficiente limpiará la habitacion y mostrará su bateria.
+                                        bateria = bateria - (contador * 1.5);
+                                        System.out.println("La bateria restante de la aspiradora es: " + bateria);
+                                        // Le sumamos 1 al valor de la ubicacion para saber en que sala se encuentra.
+                                        ubicacion++;
+                                        // Tambien volvemos a darle el valor 0 al contador para que no se solapen unas habitaciones con otras
+                                        contador = 0;
+
+                                    }
+                                    // Mensaje a mostrar al finalizar la limpieza de las habitaciones
+                                    System.out.println("Limpieza de todas las dependencias completa");
+                                    break;
+                                case 2:
+                                    // Modo en el cual selecionamos una habitacion a limpiar.
+                                    break;
+                            }
                             break;
+
                         case 4:
                             break;
                         case 5:
@@ -108,7 +166,7 @@ public class Aspirador {
                         case 7:
                             break;
                     }
-
+                    // Mostramos la bateria restante a la aspiradora, y aumentamos el valor a primeraVEz para que no pida siempre los m2.
                     System.out.println("Bateria restante " + bateria);
                     primeraVez++;
                     break;
@@ -121,4 +179,5 @@ public class Aspirador {
             }
         } while (repetir);
     }
+
 }
