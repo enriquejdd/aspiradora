@@ -8,7 +8,7 @@ package enrique.aspiradora;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
+//import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,9 +24,8 @@ public class Aspirador {
         //Luego los double del numero de m2, el porcentaje de bateria, el contador de m2 y la suma de los m2.
         // También creamos la variable boleana repetir para salir del bucle y las String para saber si el usuario desea usarla o no.
 
-        Scanner teclado = new Scanner(System.in);
-        int nDependencias = 5;
-        double[] metrosCuadrados = new double[nDependencias];
+        int nDependencias = 0;// = 5;
+        double[] metrosCuadrados = null;// = new double[nDependencias];
         double bateria;
         boolean repetir = true;
         String modo;
@@ -39,9 +38,15 @@ public class Aspirador {
         // Bateria que gasta segun si aspiran o aspiran y friega
         double bateriaAspiracion = 1.5;
         double bateriaAspiracionFregado = 2.5;
+        String contraseña = "usu.ario";
 
-        // Manera en la que usar los JOptionPane
+        // Preguntamos que usuario es y cual es la contraseña de la aplicación. Comprobando que sea la misma que el valor contraseña.
         JOptionPane.showMessageDialog(null, "Buenos días"); //Manera de añadir los Joptions
+        String usu = JOptionPane.showInputDialog("¿Qué usuario se quiere registrar?");
+        String pswd = JOptionPane.showInputDialog("¿Qué contraseña tiene el usuario " + usu + "?");
+        while (!pswd.equals(contraseña)) {
+            pswd = JOptionPane.showInputDialog("Contraseña incorrecta, pruebe otra");
+        }
 
         // Al ser la primera vez empezará con la batería totalmente cargada
         bateria = 100;
@@ -61,9 +66,9 @@ public class Aspirador {
                     // Creamos un if para que la primera vez que se inicie el programa pida los metros cuadrados de las habitaciones.
                     if (primeraVez == 1) {
 //                        // Para indicar el numero de dependencias de la casa en vez de asignarle 5 de inicio.
-//                        System.out.println("¿Cuantás dependencias tiene la casa?");
-//                        nDependencias = teclado.nextInt();
-//                        metrosCuadrados = new double[nDependencias];
+                        String salas = JOptionPane.showInputDialog("¿Cuantás dependencias tiene la casa? ");
+                        nDependencias = Integer.parseInt(salas);
+                        metrosCuadrados = new double[nDependencias];
 
                         JOptionPane.showMessageDialog(null, "Configuración inicial de los metros cuadrados.");
                         // Bucle for en el cual se repetirá mientras i sea menor que el numero de dependencias(5) en este caso.
@@ -81,6 +86,7 @@ public class Aspirador {
                             sumaMetros += metrosCuadrados[i];
                         }
                     }
+
                     // Añadimos un menú para el usuario. Mientras no seleccione una de las opciones se le preguntara de nuevo.
                     modo = JOptionPane.showInputDialog("¿Qué desea hacer?"
                             + "\n 1. - Configurar el sistema"
@@ -92,7 +98,7 @@ public class Aspirador {
                             + "\n 7. - Salir");
                     int modo1 = Integer.parseInt(modo);
 
-                    while (modo1 < 0 || modo1 > 7) {
+                    while (modo1 < 1 || modo1 > 7) {
                         modo = JOptionPane.showInputDialog("Escriba un valor correcto");
                         modo1 = Integer.parseInt(modo);
                     }
@@ -101,6 +107,7 @@ public class Aspirador {
                         // Primera opcion en la cual configuramos los m2 de la casa nuevamente.
                         case 1:
                             JOptionPane.showMessageDialog(null, "CONFIGURACIÓN DE LOS METROS CUADRADOS DE LAS SALAS");
+                            sumaMetros = 0;
                             for (int i = 0; i < metrosCuadrados.length; i++) {
                                 String metros = JOptionPane.showInputDialog("Metros cuadrados de la sala " + (i + 1));
                                 metrosCuadrados[i] = Integer.parseInt(metros);
@@ -109,6 +116,8 @@ public class Aspirador {
                                     metros = JOptionPane.showInputDialog("Escriba un valor superior a 0 metros cuadrados");
                                     metrosCuadrados[i] = Integer.parseInt(metros);
                                 }
+                                // Sumamos todos los m2 de la casa para poder mostrarlos mas adelante.
+                                sumaMetros += metrosCuadrados[i];
                             }
                             break;
 
@@ -140,7 +149,7 @@ public class Aspirador {
                                         // Creo un if para que antes de "iniciar" la limpieza vea si puede acabar la habitacion y en caso contrario
                                         // se lo notifique al usuario y pare con la limpieza.
                                         if ((bateria - (contador * bateriaAspiracion)) <= 3) {
-                                            JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, "
+                                            JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar con la operación, "
                                                     + "mandar a la base de carga");
                                             break;
                                         }
@@ -163,11 +172,17 @@ public class Aspirador {
                                     // Modo en el cual selecionamos una habitacion a limpiar.
                                     String dep = JOptionPane.showInputDialog("¿Qué dependencia desea que se limpie?");
                                     int dependenciaLimpiar = Integer.parseInt(dep);
-                                    // Restamos 1 ya que la array empieza en 0
+
+                                    while (dependenciaLimpiar > nDependencias || dependenciaLimpiar < 1) {
+                                        dep = JOptionPane.showInputDialog("Dependencia incorecta, escoja otra");
+                                        dependenciaLimpiar = Integer.parseInt(dep);
+                                    }
+                                    // Restamos 1 ya que la array empieza en -1
                                     contador = contador + metrosCuadrados[dependenciaLimpiar - 1];
 
                                     if ((bateria - (contador * bateriaAspiracion)) <= 3) {
-                                        JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, mandar a la base de carga");
+                                        JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar con la limpieza"
+                                                + ", mandar a la base de carga");
                                         break;
                                     }
                                     ubicacion = dependenciaLimpiar;
@@ -199,7 +214,8 @@ public class Aspirador {
                                         contador = contador + metrosCuadrados[j];
                                         // Para deteenr su ejecución si no tiene bateria suficiente para su funcion
                                         if ((bateria - (contador * bateriaAspiracionFregado)) <= 3) {
-                                            JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, mandar a la base de carga");
+                                            JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar con la dependencia"
+                                                    + ", mandar a la base de carga");
                                             break;
                                         }
                                         // EN caso contrario realizará la limpieza sin problemas
@@ -219,12 +235,19 @@ public class Aspirador {
                                     // Modo en el cual selecionamos una habitacion a limpiar.
                                     String dep = JOptionPane.showInputDialog("¿Qué dependencia desea que se limpie?");
                                     int dependenciaLimpiar = Integer.parseInt(dep);
+
+                                    while (dependenciaLimpiar > nDependencias || dependenciaLimpiar < 1) {
+                                        dep = JOptionPane.showInputDialog("Dependencia incorecta, escoja otra");
+                                        dependenciaLimpiar = Integer.parseInt(dep);
+                                    }
+
                                     // Restamos 1 ya que la array empieza en 0
                                     contador = contador + metrosCuadrados[dependenciaLimpiar - 1];
 
                                     // Para detener su ejecución si no tiene bateria suficiente para su funcion
                                     if ((bateria - (contador * bateriaAspiracionFregado)) <= 3) {
-                                        JOptionPane.showMessageDialog(null, "Batería restante insuficiente para continuar, mandar a la base de carga");
+                                        JOptionPane.showMessageDialog(null, "Batería restante insuficiente para limpiar completamente la dependencia"
+                                                + ", mandar a la base de carga");
                                         break;
                                     }
                                     ubicacion = dependenciaLimpiar;
@@ -253,13 +276,19 @@ public class Aspirador {
                             break;
                         case 6:
                             // Carga
-                            JOptionPane.showMessageDialog(null, "CARGA"
-                                    + "\n Aspiradora diriguiendose a su base de carga"
-                                    + "\n "
-                                    + "\n Aspiradora cargandose"
-                                    + "\n "
-                                    + "\n Batería cargada satisfactoriamente");
-                            bateria = 100;
+                            if (bateria == 100) {
+                                JOptionPane.showMessageDialog(null, "La aspiradora ya dispone del 100% de bateria");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "CARGA"
+                                        + "\n Aspiradora diriguiendose a su base de carga"
+                                        + "\n "
+                                        + "\n Aspiradora cargandose"
+                                        + "\n "
+                                        + "\n Batería cargada satisfactoriamente");
+                                bateria = 100;
+                                ubicacion = 0;
+                            }
+
                             break;
                         case 7:
                             // Salir
