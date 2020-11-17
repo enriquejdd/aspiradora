@@ -121,10 +121,11 @@ public class Aspirador {
                             }
                             break;
 
-                        // Mostramos el nivel de la carga de la aspiradora.
                         case 2:
-                            JOptionPane.showMessageDialog(null, "BATERIA ACTUAL"
-                                    + "\n La bateria actual de la aspiradora es: " + bateria);
+                            // Permitimos que el usuario le de una bateria para testear que salas podria y cuales no limpiar.
+                            String bat = JOptionPane.showInputDialog("BATERIA ACTUAL"
+                                    + "\n ¿Qué bateria desea que tenga la aspiradora?");
+                            bateria = Integer.parseInt(bat);
                             break;
 
                         // Modo de aspiración.
@@ -161,7 +162,7 @@ public class Aspirador {
                                         contador = 0;
                                         JOptionPane.showMessageDialog(null, "Limpieza de la dependencia " + ubicacion + " realizada");
 
-                                        if ((j + 1) == 5) {
+                                        if ((j + 1) == nDependencias) {
                                             // Mensaje a mostrar al finalizar la limpieza de las habitaciones
                                             JOptionPane.showMessageDialog(null, "Limpieza de todas las dependencias completa");
                                         }
@@ -225,7 +226,7 @@ public class Aspirador {
 
                                         JOptionPane.showMessageDialog(null, "Limpieza de la dependencia " + ubicacion + " realizada");
 
-                                        if ((j + 1) == 5) {
+                                        if ((j + 1) == nDependencias) {
                                             JOptionPane.showMessageDialog(null, "Limpieza de todas las dependencias completa");
                                         }
                                     }
